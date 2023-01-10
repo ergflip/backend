@@ -13,45 +13,18 @@ import org.springframework.web.bind.annotation.*;
 
 import static com.ergflip.ergflipbackend.utils.ApiUtils.serverWalletHasEnoughFunds;
 
+@CrossOrigin(origins = {"https://www.grandgambit.io"})
 @RestController
 public class ReceiveBetController {
 
     @Autowired
     private ReceiveBetService receiveBetService;
 
-    @Autowired
-    private ReceiveTokenBetService receiveTokenBetService;
-
-    @Autowired
-    private TxIdRepository txIdRepository;
-    /*@CrossOrigin(origins = "https://www.ergflip.com/")*/
-    @CrossOrigin(origins = {"https://www.ergflip.com/"})
     @GetMapping("/backendReachable")
     public int backendReachable() {
         if (serverWalletHasEnoughFunds()) {
             return receiveBetService.getLastAddress();
         }
         else return 0;
-    }
-
-    /*@CrossOrigin(origins = "https://www.ergflip.com/")*/
-    @CrossOrigin(origins = {"https://www.ergflip.com/"})
-    @PostMapping("/receiveBet")
-    public BetResult receiveBet(@Validated @RequestBody Bet bet) {
-        if (txIdRepository.findById(bet.getTxId()).isEmpty()) {
-            txIdRepository.save(new TxId(bet.getTxId()));
-            return receiveBetService.receiveBet(bet);
-        }
-        else return null;
-    }
-
-    @CrossOrigin(origins = {"https://www.ergflip.com/"})
-    @PostMapping("/receiveTokensBet")
-    public BetResult receiveTokensBet(@Validated @RequestBody TokenBet bet) {
-        if (txIdRepository.findById(bet.getTxId()).isEmpty()) {
-            txIdRepository.save(new TxId(bet.getTxId()));
-            return receiveTokenBetService.receiveBet(bet);
-        }
-        else return null;
     }
 }

@@ -10,52 +10,26 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+@CrossOrigin(origins = {"https://www.grandgambit.io"})
 @RestController
 public class ErgoPayController {
 
     @Autowired
     private ErgoPayService ergoPayService;
 
-    @Autowired
-    private ReceiveBetService receiveBetService;
-
-    @Autowired
-    private ReceiveTokenBetService receiveTokenBetService;
-
-    @Autowired
-    private TxIdRepository txIdRepository;
-
-    @CrossOrigin(origins = {"https://www.ergflip.com/"})
-    @GetMapping("/roundTrip/{address}/{amount}")
-    public ErgoPayResponse roundTrip(@PathVariable String address, @PathVariable Long amount) {
-        return ergoPayService.roundTrip(address, amount);
+    @GetMapping("/roundTrip/{address}/{amount}/{multiplier}/{game}")
+    public ErgoPayResponse roundTrip(@PathVariable String address, @PathVariable Long amount, @PathVariable String multiplier, @PathVariable String game) {
+        return ergoPayService.roundTrip(address, amount, multiplier, game);
     }
 
-    @CrossOrigin(origins = {"https://www.ergflip.com/"})
-    @GetMapping("/roundTrip/{address}/{amount}/{tokenId}")
-    public ErgoPayResponse roundTokenTrip(@PathVariable String address, @PathVariable Long amount, @PathVariable String tokenId) {
-        return ergoPayService.roundTokenTrip(address, amount, tokenId);
+    @GetMapping("/roundTrip/{address}/{amount}/{tokenId}/{multiplier}/{game}")
+    public ErgoPayResponse roundTokenTrip(@PathVariable String address, @PathVariable Long amount, @PathVariable String tokenId, @PathVariable String multiplier, @PathVariable String game) {
+        return ergoPayService.roundTokenTrip(address, amount, tokenId, multiplier, game);
     }
 
-    @CrossOrigin(origins = {"https://www.ergflip.com/"})
-    @PostMapping("/receiveErgopayBet/{address}/{txId}")
-    public BetResult receiveBet(@PathVariable String address, @PathVariable String txId) {
-        if (txIdRepository.findById(txId).isEmpty()) {
-            txIdRepository.save(new TxId(txId));
-            return receiveBetService.receiveBet(new Bet(address, txId));
-        }
-        else return null;
-    }
-
-    @CrossOrigin(origins = {"https://www.ergflip.com/"})
-    @PostMapping("/receiveErgopayBet/{address}/{txId}/{tokenId}")
-    public BetResult receiveBet(@PathVariable String address, @PathVariable String txId, @PathVariable String tokenId) {
-        if (txIdRepository.findById(txId).isEmpty()) {
-            txIdRepository.save(new TxId(txId));
-            return receiveTokenBetService.receiveBet(new TokenBet(address, txId, tokenId));
-        }
-        else return null;
+    @GetMapping("/roundTripRoulette/{address}/{amount}/{tokenId}")
+    public ErgoPayResponse rouletteRoundTrip(@PathVariable String address, @PathVariable Long amount, @PathVariable String tokenId) {
+        return ergoPayService.roundRouletteTrip(address, amount, tokenId);
     }
 
 

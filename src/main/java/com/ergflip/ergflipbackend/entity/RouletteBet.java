@@ -2,22 +2,22 @@ package com.ergflip.ergflipbackend.entity;
 
 import java.io.Serializable;
 
-public class TokenBet implements Serializable {
+public class RouletteBet implements Serializable {
     private String bettorAddress;
     private String txId;
 
     private String tokenId;
 
-    private int multiplier;
+    private tableBet tableBet;
 
-    public TokenBet(String bettorAddress, String txId, String tokenId, int multiplier) {
+    public RouletteBet(String bettorAddress, String txId, String tokenId, tableBet tableBet) {
         this.bettorAddress = bettorAddress;
         this.txId = txId;
         this.tokenId = tokenId;
-        this.multiplier = multiplier;
+        this.tableBet = tableBet;
     }
 
-    public TokenBet() {}
+    public RouletteBet() {}
 
     public String getBettorAddress() {
         return bettorAddress;
@@ -43,11 +43,11 @@ public class TokenBet implements Serializable {
         this.tokenId = tokenId;
     }
 
-    public int getMultiplier() {
-        return multiplier;
+    public tableBet getTableBet() {
+        return tableBet;
     }
 
-    public void setMultiplier(int multiplier) {
-        this.multiplier = multiplier;
+    public void setTableBet(tableBet tableBet) {
+        this.tableBet = tableBet;
     }
 }

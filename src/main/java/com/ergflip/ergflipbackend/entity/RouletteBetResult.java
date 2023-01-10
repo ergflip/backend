@@ -1,26 +1,26 @@
 package com.ergflip.ergflipbackend.entity;
 
-public class BetResult {
+public class RouletteBetResult {
 
-    private boolean result;
+    private Long result;
     private Long amount;
     private String coin;
 
     private String txId;
-    public BetResult(boolean result, Long amount, String coin, String txId) {
+    public RouletteBetResult(Long result, Long amount, String coin, String txId) {
         this.result = result;
         this.amount = amount;
         this.coin = coin;
         this.txId = txId;
     }
 
-    public BetResult() {}
+    public RouletteBetResult() {}
 
-    public boolean isResult() {
+    public Long getResult() {
         return result;
     }
 
-    public void setResult(boolean result) {
+    public void setResult(Long result) {
         this.result = result;
     }
 

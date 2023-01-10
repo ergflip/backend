@@ -38,7 +38,7 @@ public class ApiUtils {
                 JSONObject confirmed = (JSONObject) data_obj.get("confirmed");
                 Long amountOfNanoErgs = (Long) confirmed.get("nanoErgs");
                 double amountOfErgs = amountOfNanoErgs / 1000000000.0;
-                if (amountOfErgs < 10) return false;
+                if (amountOfErgs < 50) return false;
                 return true;
             } else {
                 throw new RuntimeException("HttpResponseCode: " + responsecode);
